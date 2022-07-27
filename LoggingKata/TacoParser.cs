@@ -7,56 +7,33 @@
     {
         readonly ILog logger = new TacoLogger();
         
-        public ITrackable Parse(string line)
+        public ITrackable Parse(string line)          //This method returns me an ITrackable Object or Instance
         {
             logger.LogInfo("Begin parsing");
 
-            // Take your line and use line.Split(',') to split it up into an array of strings, separated by the char ','
             var cells = line.Split(',');
 
-            // If your array.Length is less than 3, something went wrong
-            if (cells.Length < 3)
+            if (line == null)
             {
-                // Log that and return null
-                // Do not fail if one record parsing fails, return null
-                return null; // TODO Implement
+                logger.LogWarning("Something went wrong: Length was less than 3");
+                return null; 
             }
 
-            var latitude = double.Parse(cells[0]);
+            if (cells.Length < 3)
+            {
+                logger.LogFatal("Uh oh. Length was less than 3");
+                return null; 
+            }
 
+            var latitude = double.Parse(cells[0]);           // We have to parse the string to convert it to a double
             var longitude = double.Parse(cells[1]);
-
             var name = cells[2];
 
-            var point = new Point();                        // Creating an object of type Point and giving it paramaters
-            point.Latitude = latitude;
-            point.Longitude = longitude;
+            ITrackable tacoBell = new TacoBell(name, latitude, longitude);   //Parameterized contructor created in TacoBell
+            
+            logger.LogInfo($"Finished parsing location {tacoBell.Name}");
 
-            var tacoBell = new TacoBell()
-            {
-                Name = name,
-                Location = point,
-
-            };
-            logger.LogInfo($"Finished parsing location {tacoBell.Name}"); 
             return tacoBell;
-
-            // grab the latitude from your array at index 0
-            // grab the longitude from your array at index 1
-            // grab the name from your array at index 2
-
-            // Your going to need to parse your string as a `double`
-            // which is similar to parsing a string as an `int`
-
-            // You'll need to create a TacoBell class
-            // that conforms to ITrackable
-
-            // Then, you'll need an instance of the TacoBell class
-            // With the name and point set correctly
-
-            // Then, return the instance of your TacoBell class
-            // Since it conforms to ITrackable
-
         }
     }
 }

@@ -41,13 +41,13 @@ namespace LoggingKata
             for (int i = 0; i < locations.Length; i++)                
                                                                     
             {                                                       
-                locationA.Latitude = locations[i].Location.Latitude;                //setting this information into my first geocoordinate object
+                locationA.Latitude = locations[i].Location.Latitude;                //setting the values into my first geocoordinate object
                 locationA.Longitude = locations[i].Location.Longitude; 
                 
                 for (int j = 1; j < locations.Length; j++)                          // It is comparing the first locationA to everyone of location B, then moves to the second location A and repeats
                 {   
-                    locationB.Latitude = locations[i].Location.Latitude;            // now setting this information into second geocoordinate object  
-                    locationB.Longitude = locations[i].Location.Longitude;
+                    locationB.Latitude = locations[j].Location.Latitude;            // now setting the values into second geocoordinate object  
+                    locationB.Longitude = locations[j].Location.Longitude;
 
 
                     testDistance = locationA.GetDistanceTo(locationB);              // Gets distance from locationA to location B
@@ -61,8 +61,8 @@ namespace LoggingKata
                 }
             }
             
-            Console.WriteLine($"The two furthest TacoBell's are {tacoBellA.Name} and {tacoBellB.Name}");
-            Console.WriteLine($"The total distance is {Math.Round((LargestDistance * metersToMiles),2)} miles.");
+            Console.WriteLine($"The two furthest {tacoBellA.GetType().Name}'s are {tacoBellA.Name} and {tacoBellB.Name}");
+            Console.WriteLine($"The total distance is {Math.Round((LargestDistance * metersToMiles), 2)} miles.");
 
 
         }
